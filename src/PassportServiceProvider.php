@@ -195,13 +195,16 @@ class PassportServiceProvider extends ServiceProvider
      */
     public function makeAuthorizationServer()
     {
-        return new AuthorizationServer(
+        $fallbackKey = base64_encode(random_bytes(32));
+        $server =  new AuthorizationServer(
             $this->app->make(Bridge\ClientRepository::class),
             $this->app->make(Bridge\AccessTokenRepository::class),
             $this->app->make(Bridge\ScopeRepository::class),
             'file://'.Passport::keyPath('oauth-private.key'),
             'file://'.Passport::keyPath('oauth-public.key')
         );
+        $server->setEncriptionKey(env('APP_KEY', $fallbackKey));
+        return $server;
     }
 
     /**
