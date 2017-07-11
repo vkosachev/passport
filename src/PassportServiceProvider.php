@@ -203,7 +203,7 @@ class PassportServiceProvider extends ServiceProvider
             'file://'.Passport::keyPath('oauth-private.key'),
             'file://'.Passport::keyPath('oauth-public.key')
         );
-        $server->setEncriptionKey(env('APP_KEY', $fallbackKey));
+        $server->setEncryptionKey(env('APP_KEY', $fallbackKey));
         return $server;
     }
 
